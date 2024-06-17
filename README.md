@@ -4,6 +4,9 @@ VisualSharp 是一个受 Unreal Engine 和 Scratch 蓝图系统启发的项目�
 
 VisualSharp is a project inspired by the blueprint system in Unreal Engine and Scratch. It aims to provide a visual programming environment for C# and leverage the native performance of C#. The project is divided into three main components: Core, Editor, and Runtime.
 
+本项目基于 [netprints](https://github.com/RobinKa/netprints.git) 进行研究和开发。
+
+This project is based on research and development from [netprints](https://github.com/RobinKa/netprints.git).
 ## Core
 
 VisualSharp 的核心组件构成了项目的基础。它包括视觉编程环境所需的基本库和框架。
