@@ -16,7 +16,7 @@ public static class CodeCompiler
     const string ASSEMBLY_NAME = "VisualSharpOutput";
     /// <summary>
     /// Compiles code into a binary.
-    /// TODO: 目前编译使用的是 Roslyn，但是Roslyn的实现并不完整，不能支持
+    /// TODO: 目前编译使用的是 Roslyn，但是Roslyn的实现并不完整，不能支持源生成器等功能，需要添加分析器引用
     /// </summary>
     /// <param name="outputPath">Output path for the compilation.</param>
     /// <param name="assemblyPaths">Paths to assemblies to reference.</param>
@@ -40,8 +40,12 @@ public static class CodeCompiler
             .AddProject(projectInfo);
         
         var project = solution.GetProject(projectInfo.Id);
+
+        IEnumerable<MetadataReference> references = assemblyPaths.Select(path => MetadataReference.CreateFromFile(path));
+
         var compilationOptions = new CSharpCompilationOptions(generateExecutable ? OutputKind.ConsoleApplication : OutputKind.DynamicallyLinkedLibrary);
         project = project.WithCompilationOptions(compilationOptions);
+
 
         foreach(var source in sources)
         {
