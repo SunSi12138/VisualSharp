@@ -1,0 +1,54 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:VisualSharp.Editor.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="VisualSharp.Editor.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="VisualSharp.Editor"
+        WindowStartupLocation="CenterScreen">
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+    <StackPanel>
+        <Grid Margin="20" ColumnDefinitions="*, Auto, Auto">
+            <Label Grid.Column="0"  FontSize="50"  Content="项目"/>
+            <Button Grid.Column="1" DockPanel.Dock="Right" Content="打开" Margin="0 0 10 0"/>
+            <Button Grid.Column="2" DockPanel.Dock="Right" Content="新建" Click="ShowCreateProject"/>
+        </Grid>
+
+        <Border Margin="20 0" Background="Gray" Padding="12">
+            <Grid  ShowGridLines="True" ColumnDefinitions="*,*,*">
+                <TextBlock Grid.Column="0" FontSize="15" Text="名称"/>
+                <TextBlock Grid.Column="1" FontSize="15" Text="位置"/>
+                <TextBlock Grid.Column="2" FontSize="15" Text="版本"/>
+            </Grid>
+        </Border>
+
+        <ListBox Margin="20 0"  ItemsSource="{Binding HistoryProject}">
+            <ListBox.DataTemplates>
+                <DataTemplate DataType="{x:Type vm:ProjectViewModel}">
+                    <Grid RowDefinitions="Auto" ShowGridLines="True" ColumnDefinitions="*, *, *">
+                        <TextBlock Grid.Column="0" Text="{Binding Name}" />
+                        <TextBlock Grid.Column="1" Text="{Binding Path}" />
+                        <TextBlock Grid.Column="2" Text="{Binding SavedVersion}" />
+                        <SplitButton Grid.Column="2" HorizontalAlignment="Right" Content="打开">
+                            <SplitButton.Flyout>
+                                <MenuFlyout Placement="Pointer">
+                                    <MenuItem Header="编辑"/>
+                                    <MenuItem Header="移除"/>
+                                    <MenuItem Header="删除"/>
+                                </MenuFlyout>
+                            </SplitButton.Flyout>
+                        </SplitButton>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.DataTemplates>
+        </ListBox>
+    </StackPanel>
+</Window>
